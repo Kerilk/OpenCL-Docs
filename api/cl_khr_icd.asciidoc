@@ -270,6 +270,18 @@ behavior is enabled. Each instance platform (and attached instance devices)
 must support having a different dispatch information set through
 {clIcdSetPlatformDispatchDataKHR}.
 
+Users can create new instances using {clCreateInstanceKHR}. Instances contain
+an instance platforms of all *instance compatible* platforms. These instance
+platforms can be queried using {clGetPlatformIDsForInstanceKHR}. Devices returned
+by {clGetDeviceIDs} used on an instance platform will be instance devices.
+An instance can be destroyed using {clDestroyInstanceKHR}.
+
+When new instances are created the loader will create new instances of these
+platforms using {clIcdCreateInstancePlatformKHR}, and set instance platforms'
+dispatch data using {clIcdSetPlatformDispatchDataKHR}. When an instance is
+destroyed, instance platforms are destroyed with
+{clIcdDestroyInstancePlatformKHR}.
+
 === New Commands
 
   * {clIcdGetPlatformIDsKHR}
@@ -283,6 +295,9 @@ New in version 2.0.2:
 
   * {clIcdCreateInstancePlatformKHR}
   * {clIcdDestroyInstancePlatformKHR}
+  * {clCreateInstanceKHR}
+  * {clDestroyInstanceKHR}
+  * {clGetPlatformIDsForInstanceKHR}
 
 === New Enums
 
@@ -303,6 +318,16 @@ New in version 2.0.2, accepted as terminator to the _properties_ list of
 {clIcdCreateInstancePlatformKHR}.
 
   * {CL_INSTANCE_PLATFORM_PROPERTIES_LIST_END_KHR}
+
+Returned by {clDestroyInstanceKHR} or {clGetPlatformIDsForInstanceKHR}
+when an invalid instance is given:
+
+  * {CL_INVALID_INSTANCE_KHR}
+
+Accepted as terminator to the _properties_ list of
+{clCreateInstanceKHR}.
+
+  * {CL_INSTANCE_PROPERTIES_LIST_END_KHR}
 
 === Issues
 
